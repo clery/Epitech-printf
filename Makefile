@@ -10,7 +10,8 @@ SRC	=	./src/my_printf.c	\
 		./src/string.c		\
 		./src/integer.c
 
-TESTS = ./src/tests/tests_printf.c
+TESTS = ./src/tests/tests_printf.c \
+		./src/tests/tests_lib_c_printf.c
 
 OBJ = $(SRC:.c=.o)
 
