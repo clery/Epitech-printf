@@ -7,7 +7,6 @@
 
 
 #include <stdio.h>
-#include <errno.h>
 
 #include <criterion/criterion.h>
 #include <criterion/new/assert.h>
