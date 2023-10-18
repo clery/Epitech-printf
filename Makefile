@@ -22,26 +22,34 @@ INCLUDE = ./include
 
 NAME = $(LIB)/libprintf.a
 
-CFLAGS = -I$(INCLUDE) -Wall -Wextra -Werror
+ARFLAGS	=	rc
 
+CC	=	gcc
+
+CPPFLAGS	=	-iquote $(INCLUDE)
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS	=
+LDLIBS	=
 
 all: tests
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 
-unit_tests: $(NAME) $(OBJ_TESTS)
-	gcc -o unit_tests  $(OBJ_TESTS) -L$(LIB) -lprintf -I$(INCLUDE) -lcriterion
+unit_tests: CFLAGS += -fprofile-arcs -ftest-coverage
+unit_tests: LDFLAGS	+= -lcriterion -lgcov
+unit_tests: $(OBJ) $(OBJ_TESTS)
+	$(CC) -o unit_tests $(OBJ) $(OBJ_TESTS) $(LDLIBS) $(LDFLAGS)
 
 tests: unit_tests
 	./unit_tests
 
 clean:
-	rm -f $(OBJ) $(OBJ_TESTS)
+	$(RM) $(OBJ) $(OBJ_TESTS)
 
 fclean: clean
-	rm -f unit_tests
-	rm -f $(NAME)
+	$(RM) unit_tests
+	$(RM) $(NAME)
 
 re: fclean all
 
