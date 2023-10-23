@@ -5,7 +5,6 @@
 ** char
 */
 
-#include <stdarg.h>
 #include <unistd.h>
 
 static int my_putnbr(int n) {
@@ -20,11 +19,4 @@ static int my_putnbr(int n) {
         ret += my_putnbr(n / 10);
     c = n % 10 + '0';
     return ret + write(1, &c, 1);
-}
-
-int handle_integer(va_list *ap) {
-    int i;
-
-    i = va_arg(*ap, int);
-    return my_putnbr(i);
 }

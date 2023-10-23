@@ -5,20 +5,18 @@
 ** char
 */
 
-#include <stdarg.h>
+#include <stddef.h>
 #include <unistd.h>
 
-static int my_strlen(char const *s) {
-    int i = 0;
+static size_t my_strlen(char const *s) {
+    size_t i = 0;
 
     while (s && s[i])
         ++i;
     return i;
 }
 
-int handle_string(va_list *ap) {
-    char *s;
-
-    s = va_arg(*ap, char *);
-    return write(1, s, my_strlen(s));
+static ssize_t my_putstr(const char *str)
+{
+    return write(1, str, my_strlen(str));
 }
