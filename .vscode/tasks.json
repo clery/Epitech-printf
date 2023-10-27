@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "options": {
+    },
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make unit_tests"
+        },
+        {
+            "label": "tests",
+            "type": "shell",
+            "command": "make tests",
+            "dependsOn": "build"
+        },
+        {
+            "label": "debug",
+            "type": "shell",
+            "dependsOn": "build",
+            "command": "${workspaceFolder}/unit_tests",
+            "args": ["--debug"],
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        }
+    ]
+}

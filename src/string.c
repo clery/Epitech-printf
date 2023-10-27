@@ -7,16 +7,10 @@
 
 #include <stdarg.h>
 #include <unistd.h>
+#include "my_printf.h"
+#include "utils.h"
 
-static int my_strlen(char const *s) {
-    int i = 0;
-
-    while (s && s[i])
-        ++i;
-    return i;
-}
-
-int handle_string(va_list *ap) {
+int handle_string(va_list *ap, flag_opt_t __attribute__ ((unused))opt) {
     char *s;
 
     s = va_arg(*ap, char *);

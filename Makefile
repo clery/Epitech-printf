@@ -5,10 +5,13 @@
 ## Makefile
 ##
 
-SRC	=	./src/my_printf.c	\
-		./src/character.c	\
-		./src/string.c		\
-		./src/integer.c
+SRC	=	./src/my_printf.c		\
+		./src/character.c		\
+		./src/string.c			\
+		./src/integer.c			\
+		./src/float.c			\
+		./src/utils/my_putnbr.c	\
+		./src/utils/strings.c
 
 TESTS = ./src/tests/tests_printf.c \
 		./src/tests/tests_lib_c_printf.c
@@ -37,15 +40,18 @@ all: tests
 $(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
 
-unit_tests: CFLAGS += -fprofile-arcs -ftest-coverage
-unit_tests: LDFLAGS	+= -lcriterion -lgcov
+unit_tests: CFLAGS += -fprofile-arcs -ftest-coverage -Wno-format-security -g
+unit_tests: LDFLAGS	+= -lcriterion --coverage
 unit_tests: $(OBJ) $(OBJ_TESTS)
 	$(CC) -o unit_tests $(OBJ) $(OBJ_TESTS) $(LDLIBS) $(LDFLAGS)
 
 tests: unit_tests
-	./unit_tests
+	-./unit_tests
+	gcovr . -e src/tests
+	@$(MAKE) clean > /dev/null
 
 clean:
+	find . \( -name "*.gcda" -or -name "*.gcno" \) -delete
 	$(RM) $(OBJ) $(OBJ_TESTS)
 
 fclean: clean

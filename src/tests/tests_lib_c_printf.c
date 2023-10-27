@@ -18,7 +18,7 @@
 
 void redirect(void);
 
-static const char * OUTPUT_FILE = "./.out.txt";
+static const char *OUTPUT_FILE = "./.out.txt";
 
 static void remove_output_file(void)
 {
